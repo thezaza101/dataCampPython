@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# DataCamp files
+dc_notebook/
+
 # Distribution / packaging
 .Python
 build/
