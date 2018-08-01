@@ -2,6 +2,8 @@ from __future__ import print_function
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
+from pprint import pprint
 import os
 
 data_path =  os.path.abspath(os.path.join('intel_ml501_class1','datasets'))
@@ -52,7 +54,6 @@ data.groupby('species').agg(['mean', 'median'])  # passing a list of recognized 
 data.groupby('species').agg([np.mean, np.median])  # passing a list of explicit aggregation functions
 
 # If certain fields need to be aggregated differently, we can do:
-from pprint import pprint
 
 agg_dict = {field: ['mean', 'median'] for field in data.columns if field != 'species'}
 agg_dict['petal_length'] = 'max'
@@ -82,4 +83,64 @@ plt.ylabel('feq')
 # show the plot
 plt.show()
 
-## TBA...
+## Q7
+sns.set_context('notebook')
+
+# This uses the `.plot.hist` method
+ax = data.plot.hist(bins=25, alpha=0.5)
+ax.set_xlabel('Size (cm)')
+
+# show the plot
+plt.show()
+
+# To create four separate plots, use Pandas `.hist` method
+axList = data.hist(bins=25)
+
+# Add some x- and y- labels to first column and last row
+for ax in axList.flatten():
+    if ax.is_last_row():
+        ax.set_xlabel('Size (cm)')
+        
+    if ax.is_first_col():
+        ax.set_ylabel('Frequency')
+
+# show the plot
+plt.show()
+
+## Q8
+axList = data.boxplot()
+
+# show the plot
+plt.show()
+
+## Q9
+# First we have to reshape the data so there is 
+# only a single measurement in each column
+
+plot_data = (data
+             .set_index('species')
+             .stack()
+             .to_frame()
+             .reset_index()
+             .rename(columns={0:'size', 'level_1':'measurement'})
+            )
+
+plot_data.head()
+
+# Now plot the dataframe from above using Seaborn
+
+sns.set_style('white')
+sns.set_context('notebook')
+sns.set_palette('dark')
+
+f = plt.figure(figsize=(6,4))
+sns.boxplot(x='measurement', y='size', 
+            hue='species', data=plot_data)
+
+# show the plot
+plt.show()
+
+## Q10
+sns.pairplot(data, hue='species',size=3)
+# show the plot
+plt.show()
