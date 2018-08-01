@@ -1,4 +1,4 @@
-# dataCampPython
+# python learning
 Random projects made when learning python.  No datasets will be available on this repo.
 
 # MIT License
