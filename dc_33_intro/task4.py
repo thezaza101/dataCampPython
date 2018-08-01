@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 
 # Define the path to the global temperature data
-fullpath =  os.path.abspath(os.path.join('dataCampPython', 'intro','datasets', 'global_temperature.csv'))
+fullpath =  os.path.abspath(os.path.join('dc_33_intro','datasets', 'global_temperature.csv'))
 
 # Reading in the global temperature data
 global_temp = pd.read_csv(fullpath)
